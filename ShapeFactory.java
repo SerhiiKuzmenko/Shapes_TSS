@@ -7,6 +7,9 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D.Double;
 
+/**
+ * A class that represents the factory entity for creating shapes
+ */
 public class ShapeFactory {
    public Shape shape;
    public BasicStroke stroke = new BasicStroke(3.0F);
@@ -14,6 +17,14 @@ public class ShapeFactory {
    public int width = 25;
    public int height = 25;
 
+   /**
+    * Constructor of the ShapeFactory class
+    * <p>
+    * Initialize the fields of the object depending
+    * on the conditions of the task.
+    *<p/>
+    * @param shape_type
+    */
    public ShapeFactory(int shape_type) {
       switch(shape_type / 10) {
       case 1:
@@ -67,6 +78,16 @@ public class ShapeFactory {
 
    }
 
+   /**
+    * Calculates the vertices of a shape and creates a star.
+    *
+    *
+    * @param arms number of arms
+    * @param center central point
+    * @param rOuter outer radius
+    * @param rInner inner radius
+    * @return star shape
+    */
    private static Shape createStar(int arms, Point center, double rOuter, double rInner) {
       double angle = 3.141592653589793D / (double)arms;
       GeneralPath path = new GeneralPath();

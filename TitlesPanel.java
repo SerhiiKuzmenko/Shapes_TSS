@@ -9,6 +9,9 @@ import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ *  A class that implements a toolkit for creating animations.
+ */
 public class TitlesPanel extends JPanel implements ActionListener {
    private Graphics2D g2d;
    private Timer animation;
@@ -16,6 +19,16 @@ public class TitlesPanel extends JPanel implements ActionListener {
    private int start_angle = 0;
    private int shape;
 
+   /**
+    * The constructor of the TitlePanel class.
+    *
+    * <p>
+    * Initializes the figure in numeric form
+    * and sets defaults for other fields
+    * </p>
+    *
+    * @param _shape figure
+    */
    public TitlesPanel(int _shape) {
       this.shape = _shape;
       this.animation = new Timer(50, this);
@@ -23,6 +36,11 @@ public class TitlesPanel extends JPanel implements ActionListener {
       this.animation.start();
    }
 
+   /**
+    * A method that follows a circle when a redraw is required and when not
+    *
+    * @param arg0 the event to be processed
+    */
    public void actionPerformed(ActionEvent arg0) {
       if (this.is_done) {
          this.repaint();
@@ -30,6 +48,11 @@ public class TitlesPanel extends JPanel implements ActionListener {
 
    }
 
+   /**
+    * Creates a rotation animation and renders a figure
+    *
+    * @param g графічний об'єкт
+    */
    private void doDrawing(Graphics g) {
       this.is_done = false;
       this.g2d = (Graphics2D)g;
@@ -61,6 +84,11 @@ public class TitlesPanel extends JPanel implements ActionListener {
       this.is_done = true;
    }
 
+   /**
+    * Draws graphic components
+    *
+    * @param g the <code>Graphics</code> object to protect
+    */
    public void paintComponent(Graphics g) {
       super.paintComponent(g);
       this.doDrawing(g);
