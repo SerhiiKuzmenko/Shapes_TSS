@@ -1,0 +1,6 @@
+# JetBrains IDE
+.idea/
+
+out/
+
+TSS_PR1.iml
