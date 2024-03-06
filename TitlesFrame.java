@@ -25,6 +25,7 @@ public class TitlesFrame extends JFrame {
       this.setTitle("Кривые фигуры");
       this.setDefaultCloseOperation(3);
       this.add(new TitlesPanel(34));
+      //this.add(new TitlesPanel(Figures.HEXAGON, Styles.RED_COLOR));
       this.setSize(350, 350);
       this.setLocationRelativeTo((Component)null);
    }

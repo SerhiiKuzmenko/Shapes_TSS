@@ -36,6 +36,8 @@ public class TitlesPanel extends JPanel implements ActionListener {
       this.animation.start();
    }
 
+
+
    /**
     * A method that follows a circle when a redraw is required and when not
     *
@@ -49,11 +51,20 @@ public class TitlesPanel extends JPanel implements ActionListener {
    }
 
    /**
+    * Check if the g2d is initialized.
+    *
+    * @return true if g2d is initialized, false otherwise
+    */
+   public boolean isInitialized() {
+      return this.g2d != null;
+   }
+
+   /**
     * Creates a rotation animation and renders a figure
     *
-    * @param g графічний об'єкт
+    * @param g graphic object
     */
-   private void doDrawing(Graphics g) {
+   private void doDrawing(Graphics g){
       this.is_done = false;
       this.g2d = (Graphics2D)g;
       this.g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

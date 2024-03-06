@@ -1,11 +1,8 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Paint;
-import java.awt.Point;
 import java.awt.Shape;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Rectangle2D.Double;
+
 
 /**
  * A class that represents the factory entity for creating shapes
@@ -13,96 +10,50 @@ import java.awt.geom.Rectangle2D.Double;
 public class ShapeFactory {
    public Shape shape;
    public BasicStroke stroke = new BasicStroke(3.0F);
-   public Paint paint;
+   public Paint paint = Color.DARK_GRAY;;
    public int width = 25;
    public int height = 25;
 
    /**
     * Constructor of the ShapeFactory class
-    * <p>
+    *
+    * @param figure figure type
+    * @param style figure style
+    */
+   public ShapeFactory(Figures figure, Styles style){
+      this.shape = figure.createFigure(this.width, this.height);
+      this.paint = style.getColor(this.width, this.height);
+      this.stroke = style.getStroke();
+   }
+   
+   /**
+    * Overloaded constructor of the ShapeFactory class
+    *
     * Initialize the fields of the object depending
     * on the conditions of the task.
-    *<p/>
+    *
     * @param shape_type
     */
    public ShapeFactory(int shape_type) {
-      switch(shape_type / 10) {
-      case 1:
-         this.shape = createStar(3, new Point(0, 0), (double)this.width / 2.0D, (double)this.width / 2.0D);
-         break;
-      case 2:
-      case 4:
-      case 6:
-      case 8:
-      default:
-         throw new Error("type is nusupported");
-      case 3:
-         this.shape = createStar(5, new Point(0, 0), (double)this.width / 2.0D, (double)this.width / 4.0D);
-         break;
-      case 5:
-         this.shape = new Double((double)(-this.width) / 2.0D, (double)(-this.height) / 2.0D, (double)this.width, (double)this.height);
-         break;
-      case 7:
-         GeneralPath path = new GeneralPath();
-         double tmp_height = Math.sqrt(2.0D) / 2.0D * (double)this.height;
-         path.moveTo((double)(-this.width / 2), -tmp_height);
-         path.lineTo(0.0D, -tmp_height);
-         path.lineTo((double)(this.width / 2), tmp_height);
-         path.closePath();
-         this.shape = path;
-         break;
-      case 9:
-         this.shape = new java.awt.geom.Arc2D.Double((double)(-this.width) / 2.0D, (double)(-this.height) / 2.0D, (double)this.width, (double)this.height, 30.0D, 300.0D, 2);
-      }
-
-      switch(shape_type % 10) {
-      case 1:
-         this.stroke = new BasicStroke(3.0F);
-         break;
-      case 2:
-      case 5:
-      case 6:
-      default:
-         throw new Error("type is nusupported");
-      case 3:
-         break;
-      case 4:
-         this.stroke = new BasicStroke(7.0F);
-         break;
-      case 7:
-         this.paint = new GradientPaint((float)(-this.width), (float)(-this.height), Color.white, (float)this.width, (float)this.height, Color.gray, true);
-         break;
-      case 8:
-         this.paint = Color.red;
-      }
-
-   }
-
-   /**
-    * Calculates the vertices of a shape and creates a star.
-    *
-    *
-    * @param arms number of arms
-    * @param center central point
-    * @param rOuter outer radius
-    * @param rInner inner radius
-    * @return star shape
-    */
-   private static Shape createStar(int arms, Point center, double rOuter, double rInner) {
-      double angle = 3.141592653589793D / (double)arms;
-      GeneralPath path = new GeneralPath();
-
-      for(int i = 0; i < 2 * arms; ++i) {
-         double r = (i & 1) == 0 ? rOuter : rInner;
-         java.awt.geom.Point2D.Double p = new java.awt.geom.Point2D.Double((double)center.x + Math.cos((double)i * angle) * r, (double)center.y + Math.sin((double)i * angle) * r);
-         if (i == 0) {
-            path.moveTo(p.getX(), p.getY());
-         } else {
-            path.lineTo(p.getX(), p.getY());
+      //Figures figure_type = Figures.HEXAGON;
+      for (Figures fg : Figures.values()) {
+         if (fg.getValue() == shape_type / 10) {
+            this.shape = fg.createFigure(this.width, this.height);
+            break;
          }
       }
 
-      path.closePath();
-      return path;
+      if (this.shape == null) {
+         throw new Error("type is unsupported");
+      }
+
+      for (Styles sl : Styles.values()) {
+         if (sl.getValue() == shape_type % 10) {
+            this.paint = sl.getColor(this.width, this.height);
+            this.stroke = sl.getStroke();
+            break;
+         }
+      }
    }
 }
+
